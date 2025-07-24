@@ -118,9 +118,6 @@ Contributions are welcome! If you'd like to improve this project, please follow 
 5.  Push to the branch (`git push origin feature/your-feature-name`).
 6.  Open a Pull Request.
 
-## 📄 License
-
-This project is licensed under the [ISC License](LICENSE) - see the `LICENSE` file for details.
 
 ## 🙏 Acknowledgements
 

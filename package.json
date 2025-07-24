@@ -1,0 +1,28 @@
+{
+  "name": "web-based-medical-image-analyzer-using-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-giftson/web-based-Medical-Image-Analyzer-using-JavaScript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevin-giftson/web-based-Medical-Image-Analyzer-using-JavaScript/issues"
+  },
+  "homepage": "https://github.com/kevin-giftson/web-based-Medical-Image-Analyzer-using-JavaScript#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pdf-parse": "^1.1.1"
+  }
+}

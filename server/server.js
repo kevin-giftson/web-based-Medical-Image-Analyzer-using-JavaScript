@@ -65,51 +65,25 @@ function fileToGenerativePart(buffer, mimeType) {
 
 // Route to handle image analysis requests
 app.post('/analyze', upload.single('image'), async (req, res) => {
-    // 'image' here refers to the name attribute in the <input type="file" name="image">
-    // In our frontend, we used formData.append('image', selectedFile);
-
     if (!req.file) {
         return res.status(400).json({ error: 'No image file uploaded.' });
     }
 
-    const file = req.file; // The uploaded file buffer and metadata
+    const file = req.file;
 
     try {
         let imagePart;
 
+        // ... (existing file type handling logic)
         if (file.mimetype === 'application/pdf') {
-            // For PDF, Gemini API can sometimes process it directly if it contains embedded images.
-            // If the PDF is complex (e.g., text-heavy documents or scans that aren't purely images),
-            // you might need to convert it to an image.
-            // For simplicity, we'll pass the PDF directly as inlineData.
-            // Note: Directly parsing images from complex PDFs in JS can be tricky.
-            // The `pdf-parse` library is more for text extraction.
-            // If Gemini struggles with your PDF, you might need a dedicated PDF-to-image conversion library (e.g., ImageMagick on server-side).
             console.log("Processing PDF file directly with Gemini.");
             imagePart = fileToGenerativePart(file.buffer, 'application/pdf');
-
-            // --- Alternative (more complex) PDF processing ---
-            // If Gemini struggles with direct PDF processing, you might need to convert pages to images.
-            // This is significantly more complex for a simple setup and often requires native libraries like ImageMagick
-            // or a dedicated PDF rendering service.
-            // For now, we'll rely on Gemini's ability to interpret PDF inline data.
-            /*
-            // Example of how you *might* process PDF to images, but it's not straightforward without a robust library
-            // pdfParse(file.buffer).then(function(data) {
-            //     // Data contains text, number of pages, etc.
-            //     // Extracting images from PDF programmatically to send them is complex.
-            //     // A common approach is to use tools like GraphicsMagick/ImageMagick (command-line tools)
-            //     // executed from Node.js, or a cloud service.
-            //     console.log("PDF parsed, but extracting images is complex without external tools.");
-            //     // For demonstration, we'll proceed by sending the whole PDF
-            // });
-            */
         } else if (file.mimetype.startsWith('image/')) {
-            // For image files (JPG, PNG)
             imagePart = fileToGenerativePart(file.buffer, file.mimetype);
         } else {
             return res.status(400).json({ error: 'Unsupported file type. Please upload JPG, PNG, or PDF.' });
         }
+
 
         console.log(`Sending ${file.mimetype} to Gemini AI.`);
         const result = await model.generateContent([SYSTEM_PROMPT, imagePart]);
@@ -117,14 +91,31 @@ app.post('/analyze', upload.single('image'), async (req, res) => {
         const text = response.text();
 
         console.log("Gemini AI Analysis Received.");
-        res.json({ analysis: text });
+
+        // --- NEW CODE STARTS HERE ---
+        const now = new Date(); // Get current date and time
+        const analysisDateTime = now.toLocaleString('en-IN', { // Format for India locale
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true // Use 12-hour clock with AM/PM
+        });
+        // --- NEW CODE ENDS HERE ---
+
+        // Send the analysis and the date/time back to the frontend
+        res.json({
+            analysis: text,
+            analysisDateTime: analysisDateTime // Include the new field
+        });
 
     } catch (error) {
         console.error('Error analyzing image with Gemini AI:', error);
         if (error.response && error.response.status === 429) {
             res.status(429).json({ error: 'Too many requests. Please try again after some time.' });
         } else if (error.message.includes('Could not find image content')) {
-            // Specific error for cases where Gemini can't parse the image (e.g., corrupt file, unsupported sub-format)
             res.status(400).json({ error: 'Unable to process image content. The image might be corrupt or an unsupported format for AI analysis.' });
         }
         else {
@@ -132,6 +123,7 @@ app.post('/analyze', upload.single('image'), async (req, res) => {
         }
     }
 });
+
 
 // Start the server
 app.listen(port, () => {

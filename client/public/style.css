@@ -24,23 +24,33 @@ h1, h2 {
     color: #0056b3;
 }
 
+/* CORRECTED & CONSOLIDATED UPLOAD SECTION */
 .upload-section {
     margin: 20px 0;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center; /* Center buttons */
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Space between buttons */
+    /* Removed flex-direction: column; if you want horizontal buttons.
+       If you want them stacked, keep 'flex-direction: column;' and remove 'flex-wrap' and 'justify-content'.
+       Based on the new HTML with multiple buttons, `flex-wrap` and `justify-content: center` are likely what you want.
+    */
 }
 
+
+/* Make sure the image input itself is hidden (this was already there, just ensuring it's not duplicated) */
 input[type="file"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 300px;
+    display: none; /* Keep this to hide the default browser input */
+    /* Other input[type="file"] styles (padding, border, etc.) are now effectively unused
+       because the element is hidden and we're using a custom button.
+       You can remove them if they're not needed for other file inputs.
+    */
 }
 
-button {
+
+/* Combined styles for all buttons that look similar */
+.upload-button, .nav-button, button { /* Apply to all button-like elements */
     background-color: #007bff;
     color: white;
     padding: 10px 20px;
@@ -49,16 +59,23 @@ button {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    min-width: 120px; /* Give buttons a consistent width */
 }
 
-button:hover:not(:disabled) {
+/* General button hover and disabled states */
+button:hover:not(:disabled),
+.upload-button:hover:not(:disabled),
+.nav-button:hover:not(:disabled) {
     background-color: #0056b3;
 }
 
-button:disabled {
+button:disabled,
+.upload-button:disabled,
+.nav-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
+
 
 .image-preview-section {
     margin-top: 30px;
@@ -117,8 +134,32 @@ button:disabled {
     margin-bottom: 10px;
 }
 
-/* Add this to your style.css if you want to manage the styling here instead of inline in JS */
+/* This class is used dynamically by JavaScript */
 .analysis-heading {
     color: #007bff; /* Or your chosen color */
     font-weight: bold;
+}
+
+
+.navigation-section {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Space between nav elements */
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.nav-button {
+    padding: 8px 15px; /* Slightly smaller padding for nav buttons */
+    font-size: 14px;
+    /* This overrides the general button padding/font-size from the combined rule, which is good */
+}
+
+#analysisCounter {
+    font-weight: 600; /* Semi-bold */
+    min-width: 50px; /* Ensure space for longer numbers */
+    text-align: center;
 }

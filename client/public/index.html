@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Image Analyzer</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -16,8 +17,16 @@
         <p>Upload an image (JPG, PNG, PDF) for analysis by Gemini AI.</p>
 
         <div class="upload-section">
-            <input type="file" id="imageUpload" accept=".jpg,.jpeg,.png,.pdf">
+            <input type="file" id="imageUpload" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+            <button id="selectImageButton" class="upload-button">Select/Change Image</button>
             <button id="analyzeButton" disabled>Analyze Image</button>
+            <button id="addNewAnalysisButton" class="upload-button" style="display: none;">+ New Analysis</button>
+        </div>
+
+        <div id="navigation-section" class="navigation-section" style="display: none;">
+            <button id="prevAnalysisButton" class="nav-button">&lt; Prev</button>
+            <span id="analysisCounter">1/1</span>
+            <button id="nextAnalysisButton" class="nav-button">Next &gt;</button>
         </div>
 
         <div class="image-preview-section">

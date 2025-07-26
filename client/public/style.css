@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family:'Poppins', Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
     display: flex;
@@ -105,4 +105,20 @@ button:disabled {
     min-height: 100px;
     max-height: 400px; /* Limit height for scrollability */
     overflow-y: auto; /* Enable scrolling if content exceeds max-height */
+    font-family: 'Poppins', sans-serif; /* Ensure Poppins is used specifically for the results */
+    font-size: 1.05em; /* Slightly larger than default, adjust as needed */
+    line-height: 1.6; /* Improve readability */
+}
+
+#analysisTime {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins */
+    font-size: 0.95em; /* Slightly larger than before, adjust as needed */
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Add this to your style.css if you want to manage the styling here instead of inline in JS */
+.analysis-heading {
+    color: #007bff; /* Or your chosen color */
+    font-weight: bold;
 }

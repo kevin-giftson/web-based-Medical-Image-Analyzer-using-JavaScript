@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Image Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,6 +29,7 @@
         <div class="analysis-results">
             <h2>Analysis Results:</h2>
             <div id="loadingIndicator" style="display: none;">Analyzing image... Please wait.</div>
+            <p id="analysisTime" style="font-size: 0.9em; color: #555; margin-bottom: 10px; display: none;"></p>
             <pre id="resultsText"></pre>
         </div>
     </div>

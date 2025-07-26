@@ -1,3 +1,30 @@
+// Function to format the analysis text with bold/colored headings
+function formatAnalysisText(text) {
+    let formattedText = text;
+
+    // Define the headings to highlight
+    const headings = [
+        "Detailed Analysis:",
+        "Findings Report:",
+        "Recommendation and Next Steps:",
+        "Treatment Suggestion:"
+    ];
+
+    // Define the color (e.g., a shade of blue or green)
+    const highlightColor = "#007bff"; // A nice blue, matches your button color
+    // const highlightColor = "#28a745"; // A nice green
+
+    headings.forEach(heading => {
+        // Create a regular expression to find the heading, case-insensitively and globally
+        // \b ensures whole word match, :? ensures optional colon if AI sometimes omits it
+        const regex = new RegExp(`(${heading.replace(':', '\\:')})`, 'gi'); // Escaping colon for regex
+
+        formattedText = formattedText.replace(regex, `<span class="analysis-heading" style="color: ${highlightColor}; font-weight: bold;">$1</span>`);
+    });
+
+    return formattedText;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const imageUpload = document.getElementById('imageUpload');
     const analyzeButton = document.getElementById('analyzeButton');
@@ -5,8 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const noImageText = document.getElementById('noImageText');
     const loadingIndicator = document.getElementById('loadingIndicator');
     const resultsText = document.getElementById('resultsText');
+    const analysisTime = document.getElementById('analysisTime');
 
-    let selectedFile = null; // To store the file object
+    let selectedFile = null;
 
     // Event listener for file selection
     imageUpload.addEventListener('change', (event) => {
@@ -67,8 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errorData.error || 'Something went wrong on the server.');
             }
 
-            const data = await response.json();
-            resultsText.textContent = data.analysis; // Display the analysis result
+            const data = await response.json();            
+            resultsText.innerHTML = formatAnalysisText(data.analysis); // Use innerHTML because we're inserting HTML tags
+
+            if (data.analysisDateTime) {
+                analysisTime.textContent = `Analysis made on: ${data.analysisDateTime}`;
+                analysisTime.style.display = 'block';
+            } else {
+                analysisTime.style.display = 'none';
+            }
+
+            if (data.analysisDateTime) {
+                analysisTime.textContent = `Analysis made on: ${data.analysisDateTime}`;
+                analysisTime.style.display = 'block'; // Show the date/time
+            } else {
+                analysisTime.style.display = 'none'; // Hide if no date/time is sent (shouldn't happen with our server code)
+            }
+
         } catch (error) {
             console.error('Error during analysis:', error);
             resultsText.textContent = `Error: ${error.message}. Please try again or check the console for more details.`;

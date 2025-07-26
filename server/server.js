@@ -65,64 +65,72 @@ function fileToGenerativePart(buffer, mimeType) {
 
 // Route to handle image analysis requests
 app.post('/analyze', upload.single('image'), async (req, res) => {
+    console.log(`[${new Date().toLocaleString('en-IN')}] Received request to /analyze`);
+
     if (!req.file) {
+        console.log(`[${new Date().toLocaleString('en-IN')}] Error: No image file uploaded.`);
         return res.status(400).json({ error: 'No image file uploaded.' });
     }
 
     const file = req.file;
+    console.log(`[${new Date().toLocaleString('en-IN')}] File received: ${file.originalname}, MimeType: ${file.mimetype}, Size: ${file.size} bytes`);
 
     try {
         let imagePart;
 
-        // ... (existing file type handling logic)
         if (file.mimetype === 'application/pdf') {
-            console.log("Processing PDF file directly with Gemini.");
+            console.log(`[${new Date().toLocaleString('en-IN')}] Processing PDF file directly with Gemini.`);
             imagePart = fileToGenerativePart(file.buffer, 'application/pdf');
         } else if (file.mimetype.startsWith('image/')) {
             imagePart = fileToGenerativePart(file.buffer, file.mimetype);
         } else {
+            console.log(`[${new Date().toLocaleString('en-IN')}] Error: Unsupported file type '${file.mimetype}'.`);
             return res.status(400).json({ error: 'Unsupported file type. Please upload JPG, PNG, or PDF.' });
         }
 
+        console.log(`[${new Date().toLocaleString('en-IN')}] Sending content to Gemini AI...`);
+        // Log the parts being sent to Gemini (be careful not to print large binary data)
+        // console.log("Content parts sent to Gemini:", [SYSTEM_PROMPT, imagePart]); // Uncomment cautiously, this might print too much data
 
-        console.log(`Sending ${file.mimetype} to Gemini AI.`);
         const result = await model.generateContent([SYSTEM_PROMPT, imagePart]);
         const response = await result.response;
         const text = response.text();
 
-        console.log("Gemini AI Analysis Received.");
+        console.log(`[${new Date().toLocaleString('en-IN')}] Gemini AI Analysis Received:`);
+        console.log("--- START GEMINI RESPONSE ---");
+        console.log(text); // <-- This will print the full AI response
+        console.log("--- END GEMINI RESPONSE ---");
 
-        // --- NEW CODE STARTS HERE ---
-        const now = new Date(); // Get current date and time
-        const analysisDateTime = now.toLocaleString('en-IN', { // Format for India locale
+
+        const now = new Date();
+        const analysisDateTime = now.toLocaleString('en-IN', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
-            hour12: true // Use 12-hour clock with AM/PM
+            hour12: true
         });
-        // --- NEW CODE ENDS HERE ---
 
-        // Send the analysis and the date/time back to the frontend
         res.json({
             analysis: text,
-            analysisDateTime: analysisDateTime // Include the new field
+            analysisDateTime: analysisDateTime
         });
+        console.log(`[${new Date().toLocaleString('en-IN')}] Response sent to frontend.`);
 
     } catch (error) {
-        console.error('Error analyzing image with Gemini AI:', error);
+        console.error(`[${new Date().toLocaleString('en-IN')}] Error analyzing image with Gemini AI:`, error);
         if (error.response && error.response.status === 429) {
             res.status(429).json({ error: 'Too many requests. Please try again after some time.' });
         } else if (error.message.includes('Could not find image content')) {
             res.status(400).json({ error: 'Unable to process image content. The image might be corrupt or an unsupported format for AI analysis.' });
-        }
-        else {
+        } else {
             res.status(500).json({ error: 'Failed to analyze image. Please try again.' });
         }
     }
 });
+
 
 
 // Start the server

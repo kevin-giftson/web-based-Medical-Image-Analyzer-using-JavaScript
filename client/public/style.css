@@ -1,165 +1,215 @@
-body {
-    font-family:'Poppins', Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align to top */
-    min-height: 100vh;
-    margin: 20px;
+/* Base Reset */
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #f0f9ff, #e0f7fa);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background-color: #1da69a;
+    color: white;
+    padding: 40px 20px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
     text-align: center;
 }
 
-h1, h2 {
-    color: #0056b3;
+/* Main Content */
+.main-container {
+    flex-grow: 1;
+    padding: 40px;
 }
 
-/* CORRECTED & CONSOLIDATED UPLOAD SECTION */
-.upload-section {
-    margin: 20px 0;
+/* Container Styling */
+.container {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+.main-heading {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1da69a;
+}
+
+/* Layout */
+.row {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    justify-content: center; /* Center buttons */
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+    justify-content: space-between;
+}
+
+/* Cards */
+.card {
+    flex: 1;
+    min-width: 300px;
+    padding: 25px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.card.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #1da69a;
+}
+
+.card ul {
+    list-style: none;
+    font-size: 1rem;
+    line-height: 2;
+    padding: 0;
+}
+
+.card ul li {
+    margin-bottom: 8px;
+    display: flex;
     align-items: center;
-    gap: 10px; /* Space between buttons */
-    /* Removed flex-direction: column; if you want horizontal buttons.
-       If you want them stacked, keep 'flex-direction: column;' and remove 'flex-wrap' and 'justify-content'.
-       Based on the new HTML with multiple buttons, `flex-wrap` and `justify-content: center` are likely what you want.
-    */
 }
 
-
-/* Make sure the image input itself is hidden (this was already there, just ensuring it's not duplicated) */
-input[type="file"] {
-    display: none; /* Keep this to hide the default browser input */
-    /* Other input[type="file"] styles (padding, border, etc.) are now effectively unused
-       because the element is hidden and we're using a custom button.
-       You can remove them if they're not needed for other file inputs.
-    */
+.card ul li i {
+    margin-right: 10px;
+    color: #1da69a;
 }
 
+/* Upload Section */
+.upload-card input[type="file"] {
+    display: none;
+}
 
-/* Combined styles for all buttons that look similar */
-.upload-button, .nav-button, button { /* Apply to all button-like elements */
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+.upload-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.upload-button,
+.nav-button,
+button {
+    background-color: #1da69a;
+    color: #fff;
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    min-width: 120px; /* Give buttons a consistent width */
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    min-width: 180px;
+    margin-bottom: 20px;
 }
 
-/* General button hover and disabled states */
-button:hover:not(:disabled),
-.upload-button:hover:not(:disabled),
-.nav-button:hover:not(:disabled) {
-    background-color: #0056b3;
-}
-
-button:disabled,
-.upload-button:disabled,
-.nav-button:disabled {
-    background-color: #cccccc;
+button:disabled {
+    background-color: #ccc;
     cursor: not-allowed;
 }
 
-
-.image-preview-section {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+button:hover:not(:disabled) {
+    background-color: #16877f;
 }
 
-#imagePreview {
-    max-width: 100%;
-    max-height: 300px;
+/* Preview Section */
+.preview-card img {
+    width: 100%;
+    max-height: 250px;
     object-fit: contain;
+    border-radius: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
     margin-top: 15px;
-    background-color: #f9f9f9;
 }
 
 #noImageText {
-    color: #666;
+    color: #888;
     font-style: italic;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
-.analysis-results {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-    text-align: left;
-}
-
-#loadingIndicator {
-    font-style: italic;
-    color: #007bff;
-    margin-bottom: 10px;
+/* Results */
+.result-card pre {
+    background-color: #f0fdfa;
+    border: 1px solid #c1ebe7;
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 120px;
+    max-height: 250px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-size: 1em;
 }
 
 #resultsText {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    white-space: pre-wrap; /* Ensures text wraps but preserves spaces/newlines */
-    word-wrap: break-word; /* Breaks long words if necessary */
-    min-height: 100px;
-    max-height: 400px; /* Limit height for scrollability */
-    overflow-y: auto; /* Enable scrolling if content exceeds max-height */
-    font-family: 'Poppins', sans-serif; /* Ensure Poppins is used specifically for the results */
-    font-size: 1.05em; /* Slightly larger than default, adjust as needed */
-    line-height: 1.6; /* Improve readability */
+    font-family: 'Poppins', sans-serif;
+}
+
+#loadingIndicator {
+    color: #1da69a;
+    font-style: italic;
 }
 
 #analysisTime {
-    font-family: 'Poppins', sans-serif; /* Apply Poppins */
-    font-size: 0.95em; /* Slightly larger than before, adjust as needed */
+    font-size: 0.9em;
     color: #555;
     margin-bottom: 10px;
 }
 
-/* This class is used dynamically by JavaScript */
-.analysis-heading {
-    color: #007bff; /* Or your chosen color */
-    font-weight: bold;
-}
-
-
+/* Navigation */
 .navigation-section {
-    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Space between nav elements */
-    font-family: 'Poppins', sans-serif;
+    gap: 15px;
     font-size: 1.1em;
-    color: #333;
-}
-
-.nav-button {
-    padding: 8px 15px; /* Slightly smaller padding for nav buttons */
-    font-size: 14px;
-    /* This overrides the general button padding/font-size from the combined rule, which is good */
 }
 
 #analysisCounter {
-    font-weight: 600; /* Semi-bold */
-    min-width: 50px; /* Ensure space for longer numbers */
+    font-weight: 600;
+    min-width: 50px;
     text-align: center;
+}
+
+.discrimilar {
+    text-align: center;
+    color: red;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-container {
+        padding: 20px;
+    }
 }

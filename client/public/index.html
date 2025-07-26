@@ -1,48 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medical Image Analyzer</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="container">
-        <h1>Medical Image Analyzer</h1>
-        <p>Upload an image (JPG, PNG, PDF) for analysis by Gemini AI.</p>
+    <div class="sidebar">
+        <h2><i class="fas fa-hospital-symbol"></i> MedScan</h2>
+        <!-- You can add sidebar items here -->
+    </div>
 
-        <div class="upload-section">
-            <input type="file" id="imageUpload" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
-            <button id="selectImageButton" class="upload-button">Select/Change Image</button>
-            <button id="analyzeButton" disabled>Analyze Image</button>
-            <button id="addNewAnalysisButton" class="upload-button" style="display: none;">+ New Analysis</button>
-        </div>
+    <div class="main-container">
+        <div class="container">
+            <h1 class="main-heading"><i class="fas fa-microscope"></i> AI - Driven Super Intelligence Image Analysis</h1>
 
-        <div id="navigation-section" class="navigation-section" style="display: none;">
-            <button id="prevAnalysisButton" class="nav-button">&lt; Prev</button>
-            <span id="analysisCounter">1/1</span>
-            <button id="nextAnalysisButton" class="nav-button">Next &gt;</button>
-        </div>
+            <div class="row">
+                <!-- Left Section -->
+                <div class="card glass analysis-card">
+                    <h2><i class="fas fa-notes-medical"></i> Our Analysis Includes</h2>
+                    <ul>
+                        <li><i class="fas fa-chart-line"></i> Detailed Analysis</li>
+                        <li><i class="fas fa-file-medical-alt"></i> Findings Report</li>
+                        <li><i class="fas fa-lightbulb"></i> Recommendations</li>
+                        <li><i class="fas fa-pills"></i> Treatment Suggestions</li>
+                    </ul>
+                </div>
 
-        <div class="image-preview-section">
-            <h2>Image Preview:</h2>
-            <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
-            <p id="noImageText">No image selected.</p>
-        </div>
+                <!-- Right Upload Section -->
+                <div class="card glass upload-card">
+                    <h2><i class="fas fa-upload"></i> Upload Medical Image</h2>
+                    <input type="file" id="imageUpload" accept=".jpg,.jpeg,.png,.pdf" />
+                    <div class="upload-buttons">
+                        <button id="selectImageButton" class="upload-button">Select/Change Image</button>
+                        <button id="analyzeButton" disabled>Analyze Image</button>
+                        <button id="addNewAnalysisButton" class="upload-button" style="display: none;">+ New
+                            Analysis</button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="analysis-results">
-            <h2>Analysis Results:</h2>
-            <div id="loadingIndicator" style="display: none;">Analyzing image... Please wait.</div>
-            <p id="analysisTime" style="font-size: 0.9em; color: #555; margin-bottom: 10px; display: none;"></p>
-            <pre id="resultsText"></pre>
+            <div id="navigation-section" class="navigation-section" style="display: none;">
+                <button id="prevAnalysisButton" class="nav-button">&lt; Prev</button>
+                <span id="analysisCounter">1/1</span>
+                <button id="nextAnalysisButton" class="nav-button">Next &gt;</button>
+            </div>
+
+            <!-- Preview and Results -->
+            <div class="row">
+                <div class="card glass preview-card">
+                    <h2><i class="fas fa-image"></i> Image Preview</h2>
+                    <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+                    <p id="noImageText">No image selected.</p>
+                </div>
+
+                <div class="card glass result-card">
+                    <h2><i class="fas fa-stethoscope"></i> Analysis Results</h2>
+                    <div id="loadingIndicator" style="display: none;">Analyzing image... Please wait.</div>
+                    <p id="analysisTime" style="display: none;"></p>
+                    <pre id="resultsText"></pre>
+                </div>
+            </div>
+            <p class="discrimilar">Disclaimer: This AI image analysis tool provides assistive insights, not definitive diagnoses. Always consult qualified professionals for final interpretation and decisions.</p>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

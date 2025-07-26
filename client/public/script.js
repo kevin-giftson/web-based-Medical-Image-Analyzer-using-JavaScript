@@ -7,7 +7,7 @@ function formatAnalysisText(text) {
         "Recommendation and Next Steps:",
         "Treatment Suggestion:"
     ];
-    const highlightColor = "#007bff";
+    const highlightColor = "#1da69a";
 
     headings.forEach(heading => {
         const regex = new RegExp(`(${heading.replace(':', '\\:')})`, 'gi');

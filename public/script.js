@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('image', selectedFile);
 
         try {
-            const response = await fetch('http://localhost:3000/analyze', { // Use '/analyze' on Render
+            const response = await fetch('https://web-based-medical-image-analyzer-using.onrender.com/analyze', { // Use '/analyze' on Render
                 method: 'POST',
                 body: formData,
             });

@@ -28,7 +28,7 @@ if (!GEMINI_API_KEY) {
     process.exit(1); // Exit if API key is missing
 }
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Use the vision model
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Use the vision model
 
 // Define the system prompt for Gemini AI
 const SYSTEM_PROMPT = `As a skilled medical practitioner specializing in image analysis, you are tasked with examining medical images for a renowned hospital. Your expertise is crucial in identifying any anomalies, diseases, or health issues that may be present in the images.
